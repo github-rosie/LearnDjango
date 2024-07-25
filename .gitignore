@@ -1,0 +1,19 @@
+# Virtual environment
+venv/
+__pycache__/
+*.pyc
+
+# Django specific
+*.log
+*.pot
+*.pyc
+*.mo
+*.pyo
+*.db
+
+# Database
+*.sqlite3
+
+# Static and media files
+staticfiles/
+media/
