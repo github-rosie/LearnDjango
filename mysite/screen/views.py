@@ -1,13 +1,12 @@
 from django.shortcuts import render
-from django.http import HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect
 
 from .forms import UploadedFileForm
 
 
-
-
-
 # Create your views here.
+def index(request):
+    return HttpResponse('Hellow world!')
 
 
 def upload_file(request):

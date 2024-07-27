@@ -1,5 +1,5 @@
 """
-URL configuration for mysite project.
+URL configuration for filemgr project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/5.0/topics/http/urls/
@@ -15,11 +15,17 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-# The include() function allows referencing other URLconfs. Whenever Django encounters include(), it chops off whatever part of the URL matched up to that point and sends the remaining string to the included URLconf for further processing.
 from django.urls import path, include
 
-urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('polls/', include('polls.urls')),
-    path('screen/', include('screen.urls')),
+from . import views
+
+""" 
+You should always use include() when you include other URL patterns. admin.site.urls is the only exception to this.
+"""
+urlpatterns = [    
+    path('admin/', admin.site.urls),    
+    path('panel/', include('panel.urls')),
+    path("visits/", include("visits.urls")),
+
+    path(route="home/", view=views.home_view_rendered, name="home"),
 ]

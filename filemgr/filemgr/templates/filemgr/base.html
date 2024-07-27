@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <!-- The <head> section is used for metadata about the document, such as its title, links to CSS, and other metadata tags. It should not contain content meant to be displayed on the webpage.
+        The <head> section typically includes elements like <title>, <meta>, <link>, and <style>. 
+    -->
+    <head>                
+        <title>{% block head_title %}{{ company_name }}{% endblock head_title %}</title>
+    </head>
+    <body>
+        <header>
+            <h1>This is a hardcoded h1 in body.header</h1>
+        </header>
+        <main>
+            <div>This is a hardcoded div in body.main in base.html</div>     
+
+            <!-- Variables that can be substitute -->
+            <h1>{{ head1 }}</h1>  
+            <pre>
+    The HttpRequest rendered dynamically in base.html: 
+    user = {{ request.user }}
+    method = {{ request.method }} 
+    is user authenticated = {{ request.user.is_authenticated }}
+            </pre>
+
+            <h2>This is a hardcoded head 2</h2>
+            <p>This is a hardcoded paragraph</p>
+            
+            <!-- This is where the main content of the page will be inserted.
+            It will be replaced by the content of the child template if it exists.
+            -->            
+            {% block content %}            
+            <h1>This is a hardcoded head1 inside the BLOCK CONTENT in BASE.html</h1>
+            {% endblock content %}
+        </main>
+        <footer>
+            <h1>This is a hardcoded h1 in body.footer</h1>
+        </footer>
+    </body>
+</html>

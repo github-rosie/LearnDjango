@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block head_title %}{{page_name}} - {{ block.super }}{% endblock head_title %}
+
+
+
+{% block content %}
+
+<h1>This is a hardcoded head1 inside BLOCK CONTENT in HOME.html </h1>
+<h1>{{ head1 }}</h1>
+
+<p>Page visits: {{ page_visits }}</p>
+<p>Total visits: {{ total_visits }}</p>
+
+{% endblock content %} 
