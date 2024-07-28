@@ -2,14 +2,19 @@
 
 {% block head_title %}{{page_name}} - {{ block.super }}{% endblock head_title %}
 
-
-
 {% block content %}
-
 <h1>This is a hardcoded head1 inside BLOCK CONTENT in HOME.html </h1>
 <h1>{{ head1 }}</h1>
+<pre>
+    The HttpRequest rendered dynamically in base.html: 
+    user = {{ request.user }}
+    method = {{ request.method }} 
+    is user authenticated = {{ request.user.is_authenticated }}
+</pre>   
 
+<!--Bootstrap buttons -->
+<button type="butoon" class="btn btn-primary">Primary button in home.html</button>
+<button type="butoon" class="btn btn-success">Success button in home.html</button>
 <p>Page visits: {{ page_visits }}</p>
 <p>Total visits: {{ total_visits }}</p>
-
 {% endblock content %} 
