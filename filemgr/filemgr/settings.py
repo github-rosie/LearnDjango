@@ -14,7 +14,7 @@ from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-#print("BASE_DIR is: ", BASE_DIR)
+#print("BASE_DIR in the settings is: ", BASE_DIR)
 
 
 # Quick-start development settings - unsuitable for production
@@ -60,7 +60,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            BASE_DIR / 'filemgr/templates/filemgr',
+            BASE_DIR / 'filemgr'/ 'templates' / 'filemgr',
             BASE_DIR / 'panel' / 'templates'/ 'panel',
             BASE_DIR / 'visits' / 'templates'/ 'visits',
         ],
