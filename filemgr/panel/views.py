@@ -34,8 +34,18 @@ def load_static_index(request):
 
 
 def upload_image(request, *args, **kwargs):
+    if request.method == 'POST':
+        form = ModelFormWithImageField(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/success/url')  # todo: sucess url need to be replaced?
+        else:
+            print('Form is not valid!')
+    else:
+        form = ModelFormWithImageField()
+
     context = {
-        "form": ModelFormWithImageField(),
+        "form": form,  # todo: form need to be assigned to after Upload File button is clicked
     }
     return render(request, upload_template, context)
 
@@ -48,7 +58,7 @@ def upload_file(request, *args, **kwargs):
             form.save()
             return HttpResponseRedirect('/success/url')  # todo: sucess url need to be replaced?
         else:
-            print('Form uploaded is not valid!')
+            print('Form is not valid!')
     else:
         form = ModelFormWithFileField()
 
