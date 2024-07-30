@@ -14,7 +14,7 @@ from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-#print("BASE_DIR in the settings is: ", BASE_DIR)
+print("BASE_DIR in the settings of the project is: ", BASE_DIR)
 
 
 # Quick-start development settings - unsuitable for production
@@ -126,7 +126,19 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+
+# Local File Storage - Default
+# By default, Django stores files locally, using the MEDIA_ROOT and MEDIA_URL settings. 
+MEDIA_ROOT = BASE_DIR / 'media'
+#MEDIA_URL = []
+
+
+# Customized File Storage 
+
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+

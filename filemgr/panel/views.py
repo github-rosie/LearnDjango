@@ -3,9 +3,8 @@ import pathlib
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 
-from .models import Plant
-from .forms import UploadFileForm
-
+from .models import ModelWithImageField, ModelWithFileField
+from .forms import ModelFormWithImageField, ModelFormWithFileField, UploadFileForm
 
 
 """ 
@@ -17,83 +16,47 @@ this_dir = pathlib.Path(__file__).resolve().parent
 #print('This views module is in directory: ', this_dir)
 
 index_template = this_dir / 'templates/panel/index.html'
-print('This template html is in directory: ', index_template)
+#print('This template html is in directory: ', index_template)
 
-
-
+upload_template = this_dir / 'templates/panel/upload.html'
 
 # Create your views here.
-def index_view(request):
+def load_index(request):
     context = {
         "button_name": "Upload File",
-        "file_name": "The name of the file uploaded"
+        "file_name": "The name of the file uploaded",
     }
     return render(request, index_template, context)
 
-
-def index_view_static(request):
+def load_static_index(request):
     return HttpResponse("This is an index page.")
 
 
-def hello_world_view(request, *args, **kwargs):
-    return HttpResponse("<h1>Hello, world!</h1>")
-    #return "Hello world!"
+
+def upload_image(request, *args, **kwargs):
+    context = {
+        "form": ModelFormWithImageField(),
+    }
+    return render(request, upload_template, context)
 
 
 # not tested yet
-def upload_image_view(request, *args, **kwargs):
+def upload_file(request, *args, **kwargs):
     if request.method == 'POST':
-        plant = Plant(request.POST, request.FILES)
+        form = ModelFormWithFileField(request.POST, request.FILES)
         if form.is_valid():
-            handle_uploaded_file(request.FILES['file'])  # todo: replace 'file' with other names?
+            form.save()
             return HttpResponseRedirect('/success/url')  # todo: sucess url need to be replaced?
         else:
             print('Form uploaded is not valid!')
     else:
-        form = UploadFileForm()
+        form = ModelFormWithFileField()
 
     context = {
-        "button_name": "Upload File",        
-        "file_name": "The name of the file uploaded",
         "form": form,  # todo: form need to be assigned to after Upload File button is clicked
     }
-    return render(request, index_template, context)
+    return render(request, upload_template, context)
 
-def upload_excel_view(request, *args, **kwargs):
-    pass 
 
-def upload_pdf_view(request, *args, **kwargs):
-    pass
-
-def upload_txt_view(request, *args, **kwargs):
-    pass
-
-# not tested yet
-def upload_file_view(request, *args, **kwargs):
-    if request.method == 'POST':
-        form = UploadFileForm(request.POST, request.FILES)
-        if form.is_valid():
-            handle_uploaded_file(request.FILES['file'])  # todo: replace 'file' with other names?
-            return HttpResponseRedirect('/success/url')  # todo: sucess url need to be replaced?
-        else:
-            print('Form uploaded is not valid!')
-    else:
-        form = UploadFileForm()
-
-    context = {
-        "button_name": "Upload File",        
-        "file_name": "The name of the file uploaded",
-        "form": form,  # todo: form need to be assigned to after Upload File button is clicked
-    }
-    return render(request, index_template, context)
-    
-# todo: this function is incomplete and only serves demonstration purpose for now
-def handle_uploaded_file(f):
-    """ 
-    Looping over UploadedFile.chunks() instead of using read() ensures that large files don’t overwhelm your system’s memory.
-    """
-    with open("some/file/name.txt", "wb+") as destination:
-        for chunk in f.chunks():
-            destination.write(chunk)
 
 

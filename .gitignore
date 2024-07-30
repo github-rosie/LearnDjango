@@ -17,3 +17,7 @@ __pycache__/
 # Static and media files
 staticfiles/
 media/
+image/
+images/
+file/
+files/
