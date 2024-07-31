@@ -13,15 +13,14 @@ django.forms.ModelForm:
 class ModelFormWithImageField(forms.ModelForm):
     class Meta:
         model = ModelWithImageField
-        fields = ('name', 'image')
+        fields = "__all__"
 
 
 class ModelFormWithFileField(forms.ModelForm):
     class Meta:
         model = ModelWithFileField
-        fields = ('name', 'file')
+        fields = ['file_name', 'file']
     
-
 
 class UploadFileForm(forms.Form):
     title = forms.CharField(max_length=50)

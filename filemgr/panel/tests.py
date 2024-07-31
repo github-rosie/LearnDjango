@@ -1,3 +1,8 @@
 from django.test import TestCase
 
-# Create your tests here.
+from panel.models import ModelWithFileField
+from panel.forms import ModelFormWithFileField
+
+
+
+

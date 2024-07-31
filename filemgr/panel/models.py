@@ -7,14 +7,29 @@ class ModelWithImageField(models.Model):
     models.Model class represents a database table in Django's ORM (Object-Relational Mapping), it defines the structure of the data (fields) and the behaviors of the data (methods) stored in the database.
     Pillow package has be be installed for ImageField to work
     """
-    name = models.CharField(max_length=500)
+    image_name = models.CharField(max_length=500)
     # images will be uploaded to directory: root/project/media/image/, when MEDIA_ROOT is setup in the project settings
     image = models.ImageField(upload_to='image/') 
+    
+    """
+    It is important to add __str__() methods to models, not only for your own convenience when dealing with the interactive prompt, but also because objects representations are used throughout Djangos automatically-generated admin.
+    """
+    def __str__(self):
+        return self.image_name
 
 
 class ModelWithFileField(models.Model):
-    name = models.CharField(max_length=500)
+    file_name = models.CharField(max_length=500)
     file = models.FileField(upload_to='files/')  
+
+    """
+    It is important to add __str__() methods to models, not only for your own convenience when dealing with the interactive prompt, but also because objects representations are used throughout Djangos automatically-generated admin.
+    """
+    def __str__(self):
+        return self.file_name
+
+
+
 
 
 

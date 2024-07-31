@@ -56,6 +56,9 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'filemgr.urls'
 
+"""
+To access the MEDIA_URL in template, must add django.template.context_processors.media to context_processeors inside the TEMPLATES config.
+"""
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -69,8 +72,9 @@ TEMPLATES = [
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
+                'django.template.context_processors.media',
                 'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
+                'django.contrib.messages.context_processors.messages',                
             ],
         },
     },
@@ -130,7 +134,7 @@ STATIC_URL = 'static/'
 # Local File Storage - Default
 # By default, Django stores files locally, using the MEDIA_ROOT and MEDIA_URL settings. 
 MEDIA_ROOT = BASE_DIR / 'media'
-#MEDIA_URL = []
+MEDIA_URL = '/media/'
 
 
 # Customized File Storage 

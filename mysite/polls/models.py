@@ -29,7 +29,8 @@ class Question(models.Model):
     pub_date = models.DateTimeField("date published")
     
     def __str__(self):
-        """It is important to add __str__() methods to models, not only for your own convenience when dealing with the interactive prompt, but also because objects representations are used throughout Djangos automatically-generated admin.
+        """
+        It is important to add __str__() methods to models, not only for your own convenience when dealing with the interactive prompt, but also because objects representations are used throughout Djangos automatically-generated admin.
         """
         return self.question_text
 

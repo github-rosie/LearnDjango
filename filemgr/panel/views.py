@@ -4,7 +4,10 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 
 from .models import ModelWithImageField, ModelWithFileField
-from .forms import ModelFormWithImageField, ModelFormWithFileField, UploadFileForm
+from .forms import ModelFormWithImageField, ModelFormWithFileField
+
+
+# https://docs.djangoproject.com/en/5.0/topics/forms/modelforms/
 
 
 """ 
@@ -15,18 +18,31 @@ The resolve() method returns the absolute path of the Path object, resolving any
 this_dir = pathlib.Path(__file__).resolve().parent
 #print('This views module is in directory: ', this_dir)
 
-index_template = this_dir / 'templates/panel/index.html'
+# Set the directories of templates
+index_template = this_dir / 'templates/panel/panel_index.html'
 #print('This template html is in directory: ', index_template)
+upload_template = this_dir / 'templates/panel/panel_upload.html'
+upload_success_template = this_dir / 'templates/panel/panel_upload_success.html'
 
-upload_template = this_dir / 'templates/panel/upload.html'
+# Set the urls
+index_url = ''
+upload_url = 'upload'
+upload_success_url = 'upload-success'
+
 
 # Create your views here.
 def load_index(request):
     context = {
-        "button_name": "Upload File",
-        "file_name": "The name of the file uploaded",
+        "msg": "This is the panel's index page.",
     }
     return render(request, index_template, context)
+
+def load_upload_success(request):
+    context = {
+        "msg": "File was uploaded successfully.",
+    }
+    return render(request, index_template, context)
+
 
 def load_static_index(request):
     return HttpResponse("This is an index page.")
@@ -36,9 +52,9 @@ def load_static_index(request):
 def upload_image(request, *args, **kwargs):
     if request.method == 'POST':
         form = ModelFormWithImageField(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect('/success/url')  # todo: sucess url need to be replaced?
+        if form.is_valid():            
+            form.save()            
+            return HttpResponseRedirect(upload_success_url)  # todo: sucess url need to be replaced?
         else:
             print('Form is not valid!')
     else:
@@ -50,15 +66,25 @@ def upload_image(request, *args, **kwargs):
     return render(request, upload_template, context)
 
 
-# not tested yet
+
 def upload_file(request, *args, **kwargs):
+    #print("Http request method is: ", request.method)
     if request.method == 'POST':
         form = ModelFormWithFileField(request.POST, request.FILES)
+        """ 
+         Just like normal form validation, model form validation is triggered implicitly when calling is_valid()
+        """        
         if form.is_valid():
+            """ 
+            Every ModelForm also has a save() method. This method creates and saves a database object from the data bound to the form. A subclass of ModelForm can accept an existing model instance as the keyword argument instance; if this is supplied, save() will update that instance. If it’s not supplied, save() will create a new instance of the specified model:
+            """
             form.save()
-            return HttpResponseRedirect('/success/url')  # todo: sucess url need to be replaced?
+            """ 
+            Prevents Resubmission: By redirecting, it prevents the form from being resubmitted if the user refreshes the page.
+            """
+            return HttpResponseRedirect(upload_success_url) 
         else:
-            print('Form is not valid!')
+            print('form is not valid!')
     else:
         form = ModelFormWithFileField()
 
@@ -66,7 +92,6 @@ def upload_file(request, *args, **kwargs):
         "form": form,  # todo: form need to be assigned to after Upload File button is clicked
     }
     return render(request, upload_template, context)
-
 
 
 

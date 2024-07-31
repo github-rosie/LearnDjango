@@ -31,10 +31,12 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    # my apps
     'polls.apps.PollsConfig',
     'screen.apps.ScreenConfig',
     'app.apps.AppConfig',
 
+    # default django apps
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -42,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    # third-party apps
     'import_export',    
 ]
 
