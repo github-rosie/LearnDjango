@@ -1,9 +1,7 @@
 {% extends 'panel_base.html' %}
 
 {% block content %}
-{{image}}
-<h1>Image id: {{image.id}}</h1>
-<h1>Image name: {{image.image_name}}</h1>
-<p>Image: {{image.image}}</p>
-<imag src="image.image"></imag>
+<h1>Image id: {{image_model.id}}</h1>
+<h1>Image name: {{image_model.image_name}}</h1>
+<img src="{{image_model.image.url}}" alt="{{image_model.image_name}}" width="500px"></img>
 {% endblock %}

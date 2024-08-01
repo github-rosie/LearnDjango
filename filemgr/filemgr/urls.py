@@ -29,4 +29,6 @@ urlpatterns = [
     path('panel/', include('panel.urls', namespace='panel')),
     path("visits/", include("visits.urls", namespace='visits')),
     path("home/", views.home_view_rendered, name="home"),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+] 
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -96,14 +96,17 @@ def upload_file(request, *args, **kwargs):
     return render(request, upload_template, context)
 
 def display_image(request, image_id, *args, **kwargs):
+    """ 
     img_mdls = ModelWithImageField.objects.all()
     for m in img_mdls:
-        print(m.image_name, m.id)
+        print(f"Image name: {m.image_name}, id: {m.id}") 
+    """
 
     img_mdl = ModelWithImageField.objects.get(pk=image_id)
+    print(f"image name: {img_mdl.image_name}, image.url: {img_mdl.image.url}")
     if img_mdl is not None:
         context = {
-            "image": img_mdl,  
+            "image_model": img_mdl,  
         }
         return render(request, display_image_template, context)
     else:
