@@ -1,14 +1,14 @@
 import pathlib
 
 from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, Http404
+from django.urls import reverse
 
 from .models import ModelWithImageField, ModelWithFileField
 from .forms import ModelFormWithImageField, ModelFormWithFileField
 
 
 # https://docs.djangoproject.com/en/5.0/topics/forms/modelforms/
-
 
 """ 
 The __file__ variable is a special variable in Python that contains the path to the script that is currently being executed.  
@@ -18,26 +18,30 @@ The resolve() method returns the absolute path of the Path object, resolving any
 this_dir = pathlib.Path(__file__).resolve().parent
 #print('This views module is in directory: ', this_dir)
 
+
 # Set the directories of templates
 index_template = this_dir / 'templates/panel/panel_index.html'
 #print('This template html is in directory: ', index_template)
 upload_template = this_dir / 'templates/panel/panel_upload.html'
 upload_success_template = this_dir / 'templates/panel/panel_upload_success.html'
+display_image_template = this_dir / 'templates/panel/panel_display_image.html'
 
-# Set the urls
-index_url = ''
-upload_url = 'upload'
-upload_success_url = 'upload-success'
+
+""" # Set url names
+upload_success_url_name = 'upload-success'
+url = reverse('panel:upload-success')
+print(url) """
+
 
 
 # Create your views here.
 def load_index(request):
     context = {
-        "msg": "This is the panel's index page.",
+        "msg": f"This is the index page.",
     }
     return render(request, index_template, context)
 
-def load_upload_success(request):
+def upload_success(request):
     context = {
         "msg": "File was uploaded successfully.",
     }
@@ -54,9 +58,9 @@ def upload_image(request, *args, **kwargs):
         form = ModelFormWithImageField(request.POST, request.FILES)
         if form.is_valid():            
             form.save()            
-            return HttpResponseRedirect(upload_success_url)  # todo: sucess url need to be replaced?
+            return HttpResponseRedirect(reverse('panel:upload-success')) 
         else:
-            print('Form is not valid!')
+            print('form is not valid!')
     else:
         form = ModelFormWithImageField()
 
@@ -64,8 +68,6 @@ def upload_image(request, *args, **kwargs):
         "form": form,  # todo: form need to be assigned to after Upload File button is clicked
     }
     return render(request, upload_template, context)
-
-
 
 def upload_file(request, *args, **kwargs):
     #print("Http request method is: ", request.method)
@@ -82,16 +84,24 @@ def upload_file(request, *args, **kwargs):
             """ 
             Prevents Resubmission: By redirecting, it prevents the form from being resubmitted if the user refreshes the page.
             """
-            return HttpResponseRedirect(upload_success_url) 
+            return HttpResponseRedirect(reverse('panel:upload-success')) 
         else:
             print('form is not valid!')
     else:
         form = ModelFormWithFileField()
 
     context = {
-        "form": form,  # todo: form need to be assigned to after Upload File button is clicked
+        "form": form,  
     }
     return render(request, upload_template, context)
 
-
-
+def display_image(request, image_id, *args, **kwargs):
+    form = ModelFormWithImageField.objects.get(pk=image_id)
+    if form.is_valid():   # or if form. is not None:
+        context = {
+            "form": form,  
+        }
+        return render(request, display_image_template, context)
+    else:
+        raise Http404(f"Image {image_id} does not exist.")
+    

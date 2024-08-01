@@ -26,10 +26,8 @@ You should always use include() when you include other URL patterns. admin.site.
 """
 urlpatterns = [    
     path('admin/', admin.site.urls),        
-    path('panel/', include('panel.urls')),  # No `name` parameter here
-    path("visits/", include("visits.urls")),
-    path(route="home/", view=views.home_view_rendered, name="home"),
-] 
-
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    #path('panel/', include('panel.urls')),  # No `name` parameter here
+    path('panel/', include('panel.urls', namespace='panel')),
+    path("visits/", include("visits.urls", namespace='visits')),
+    path("home/", views.home_view_rendered, name="home"),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

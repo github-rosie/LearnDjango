@@ -9,6 +9,7 @@ class ModelWithImageField(models.Model):
     """
     image_name = models.CharField(max_length=500)
     # images will be uploaded to directory: root/project/media/image/, when MEDIA_ROOT is setup in the project settings
+    # Note the upload_to parameter. The files will be automatically uploaded to MEDIA_ROOT/image/
     image = models.ImageField(upload_to='image/') 
     
     """
@@ -20,6 +21,8 @@ class ModelWithImageField(models.Model):
 
 class ModelWithFileField(models.Model):
     file_name = models.CharField(max_length=500)
+    # file will be uploaded to directory: root/project/media/image/, when MEDIA_ROOT is setup in the project settings
+    # Note the upload_to parameter. The files will be automatically uploaded to MEDIA_ROOT/files/
     file = models.FileField(upload_to='files/')  
 
     """
