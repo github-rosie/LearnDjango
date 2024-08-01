@@ -26,7 +26,6 @@ You should always use include() when you include other URL patterns. admin.site.
 """
 urlpatterns = [    
     path('admin/', admin.site.urls),        
-    #path('panel/', include('panel.urls')),  # No `name` parameter here
     path('panel/', include('panel.urls', namespace='panel')),
     path("visits/", include("visits.urls", namespace='visits')),
     path("home/", views.home_view_rendered, name="home"),
