@@ -1,6 +1,6 @@
 import pathlib
 
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.urls import reverse
 
@@ -25,12 +25,7 @@ index_template = this_dir / 'templates/panel/panel_index.html'
 upload_template = this_dir / 'templates/panel/panel_upload.html'
 upload_success_template = this_dir / 'templates/panel/panel_upload_success.html'
 display_image_template = this_dir / 'templates/panel/panel_display_image.html'
-
-
-""" # Set url names
-upload_success_url_name = 'upload-success'
-url = reverse('panel:upload-success')
-print(url) """
+display_pdf_template = this_dir / 'templates/panel/panel_display_pdf.html'
 
 
 
@@ -96,12 +91,23 @@ def upload_file(request, *args, **kwargs):
     return render(request, upload_template, context)
 
 def display_image(request, image_id, *args, **kwargs):
+    # Get the specific image model object or raise a 404 error if not found
+    img_mdl = get_object_or_404(ModelWithImageField, pk=image_id)    
+    # Print the image name and URL for debugging purposes
+    print(f"Image name: {img_mdl.image_name}, image.url: {img_mdl.image.url}")
+    # Create context with the image model
+    context = {
+        "image_model": img_mdl,
+    }    
+    # Render the template with the context
+    return render(request, display_image_template, context)
+
+def display_image_old(request, image_id, *args, **kwargs):
     """ 
     img_mdls = ModelWithImageField.objects.all()
     for m in img_mdls:
         print(f"Image name: {m.image_name}, id: {m.id}") 
     """
-
     img_mdl = ModelWithImageField.objects.get(pk=image_id)
     print(f"image name: {img_mdl.image_name}, image.url: {img_mdl.image.url}")
     if img_mdl is not None:
@@ -111,4 +117,15 @@ def display_image(request, image_id, *args, **kwargs):
         return render(request, display_image_template, context)
     else:
         raise Http404(f"Image {image_id} does not exist.")
-    
+
+def display_pdf(request, pdf_id, *args, **kwargs):
+    # Get the specific image model object or raise a 404 error if not found
+    pdf_mdl = get_object_or_404(ModelWithFileField, pk=pdf_id)    
+    # Print the image name and URL for debugging purposes
+    print(f"Pdf name: {pdf_mdl.file_name}, pdf.url: {pdf_mdl.file.url}")
+    # Create context with the image model
+    context = {
+        "pdf_model": pdf_mdl,
+    }    
+    # Render the template with the context
+    return render(request, display_pdf_template, context)

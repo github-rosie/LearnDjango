@@ -15,4 +15,4 @@ Pass in ModelwithFileAdmin as argument for register() function is to display ID 
 """
 
 admin.site.register(ModelWithImageField, ModelwithFileAdmin)  
-admin.site.register(ModelWithFileField)
+admin.site.register(ModelWithFileField, ModelwithFileAdmin) 
