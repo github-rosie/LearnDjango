@@ -1,6 +1,17 @@
 from django.db import models
 
+from .choices import TransactionType
 
+class Transaction(models.Model):
+    tran_type = models.CharField(max_length=20, choices=TransactionType)
+    doc_id = models.CharField(max_length=30, blank=True, null=True)   
+    doc_date = models.DateField(null=False, blank=False)
+    vendor_name = models.TextField(max_length=60, blank=False, null=False)
+    amount = models.DecimalField(blank=False, null=False, max_digits=20, decimal_places=2)
+    file = models.FileField(upload_to='files/')
+    
+    def __str__(self):
+        return f'{self.tran_type} - {self.doc_id} - {self.doc_date} - {self.amount}'
 
 class ModelWithImageField(models.Model):
     """ 
