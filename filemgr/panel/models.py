@@ -4,14 +4,22 @@ from .choices import TransactionType
 
 class Transaction(models.Model):
     tran_type = models.CharField(max_length=20, choices=TransactionType)
-    doc_id = models.CharField(max_length=30, blank=True, null=True)   
-    doc_date = models.DateField(null=False, blank=False)
+    doc_no = models.CharField(max_length=30, blank=True, null=True)   
+    doc_date = models.DateField(blank=False, null=False)
+    vendor_no = models.CharField(max_length=20, blank=False, null=False)
     vendor_name = models.TextField(max_length=60, blank=False, null=False)
-    amount = models.DecimalField(blank=False, null=False, max_digits=20, decimal_places=2)
+    amount = models.DecimalField(max_digits=20, decimal_places=2, blank=False, null=False)
+    payment_method = models.CharField(max_length=20, blank=False, null=False)
+    # If you need to create a relationship on a model that has not yet been defined, you can use the name of the model, rather than the model object itself
+    # This sort of reference, called a lazy relationship, can be useful when resolving circular import dependencies between two applications.
+    #vendor = models.ForeignKey("Vendor", on_delete=models.CASCADE) 
     file = models.FileField(upload_to='files/')
     
     def __str__(self):
-        return f'{self.tran_type} - {self.doc_id} - {self.doc_date} - {self.amount}'
+        return f'{self.tran_type}: {self.vendor_id}, {self.doc_id}, {self.doc_date}, ${self.amount}'
+
+class Vendor(models.Model):
+    pass
 
 class ModelWithImageField(models.Model):
     """ 

@@ -129,3 +129,6 @@ def display_pdf(request, pdf_id, *args, **kwargs):
     }    
     # Render the template with the context
     return render(request, display_pdf_template, context)
+
+def display_table(request, table_id, *args, **kwargs):
+    pass

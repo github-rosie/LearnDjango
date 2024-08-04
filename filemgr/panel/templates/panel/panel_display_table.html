@@ -1,0 +1,20 @@
+{% extends 'panel_base.html' %}
+
+{% block content %}
+
+<!-- <h1>{{excel_model.file_name}}</h1>
+<embed src="{{excel_model.file.url}}" type="application/pdf" width="100%" height="800px">
+</embed> -->
+
+<head>
+    <title>Display Excel Data</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <h1>Excel Data</h1>
+    <div>
+        {{ table|safe }}
+    </div>
+</body>
+
+{% endblock %}

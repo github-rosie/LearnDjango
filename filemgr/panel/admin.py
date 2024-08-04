@@ -2,7 +2,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import ModelWithImageField, ModelWithFileField
+from . import models
 
 
 class ModelwithFileAdmin(admin.ModelAdmin):
@@ -14,5 +14,6 @@ The admin.site.register() function in Django is used to register a model with th
 Pass in ModelwithFileAdmin as argument for register() function is to display ID of the model in admin
 """
 
-admin.site.register(ModelWithImageField, ModelwithFileAdmin)  
-admin.site.register(ModelWithFileField, ModelwithFileAdmin) 
+admin.site.register(models.ModelWithImageField, ModelwithFileAdmin)  
+admin.site.register(models.ModelWithFileField, ModelwithFileAdmin) 
+admin.site.register(models.Transaction, ModelwithFileAdmin)

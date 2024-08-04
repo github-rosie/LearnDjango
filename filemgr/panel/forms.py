@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import ModelWithImageField, ModelWithFileField
+from . import models
 
 
 """ 
@@ -10,15 +10,19 @@ django.forms.ModelForm:
 - it handles form validation and data cleaning. 
 """
 
-class ModelFormWithImageField(forms.ModelForm):
+class TransactionForm(forms.ModelForm):
     class Meta:
-        model = ModelWithImageField
+        model = models.Transaction
         fields = "__all__"
 
+class ModelFormWithImageField(forms.ModelForm):
+    class Meta:
+        model = models.ModelWithImageField
+        fields = "__all__"
 
 class ModelFormWithFileField(forms.ModelForm):
     class Meta:
-        model = ModelWithFileField
+        model = models.ModelWithFileField
         fields = ['file_name', 'file']
     
 
